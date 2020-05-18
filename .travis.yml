@@ -1,0 +1,27 @@
+sudo: required
+services:
+  - docker
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  - openssl aes-256-cbc -K $encrypted_7c411db3a9d5_key -iv $encrypted_7c411db3a9d5_iv -in svc-acct.json.enc -out svc-acct.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file svc-acct.json
+  - gcloud config set project inductive-cocoa-275814
+  - gcloud config set compute/zone us-east1-b
+  - gcloud container clusters get-credentials cluster-1
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t manicman/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true manicman/react-test npm run test
+
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
