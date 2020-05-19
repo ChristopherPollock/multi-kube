@@ -10,7 +10,7 @@ before_install:
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
-  - gcloud auth activate-service-account --key-file svc-acct.json
+  - gcloud auth activate-service-account --key-file svcact.json
   - gcloud config set project inductive-cocoa-275814
   - gcloud config set compute/zone us-east1-b
   - gcloud container clusters get-credentials cluster-1
