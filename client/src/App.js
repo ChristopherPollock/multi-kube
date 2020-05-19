@@ -12,7 +12,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Fib Calculator version 3. </h1>
+            <h1 className="App-title">Fib Calculator version 3. Hosted on Kubernetes! </h1>
             This text was added to my backend code and then checked into my code repo, which triggered a new  build, went through automatic testing, and then redeployed the app.
             <Link to="/">Home</Link>
             <Link to="/otherpage">Other Page</Link>
